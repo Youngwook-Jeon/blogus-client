@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // import Search from './Search';
-// import Menu from './Menu';
+import Menu from './Menu';
 
 const Header = () => {
 
@@ -15,7 +15,7 @@ const Header = () => {
 
       <div className="collapse navbar-collapse" id="navbarNav">
         {/* <Search /> */}
-        {/* <Menu /> */}
+        <Menu />
       </div>
     </nav>
   );

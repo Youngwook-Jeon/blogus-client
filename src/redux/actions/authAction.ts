@@ -34,6 +34,6 @@ export const register = (userRegister: IUserRegister) => async (dispatch: Dispat
 
     dispatch({ type: ALERT, payload: { success: res.data.msg }});
   } catch (err: any) {
-    dispatch({ type: ALERT, payload: { errors: err.response.data.errors }});
+    dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});
   }
 }

@@ -4,9 +4,9 @@ import { InputChange, FormSubmit } from '../../utils/TypeScript';
 import { register } from '../../redux/actions/authAction';
 
 const RegisterForm = () => {
-  const initialState = { name: '', email: '', password: '', cf_password: '' };
+  const initialState = { name: '', email: '', password: '', cfPassword: '' };
   const [userRegister, setUserRegister] = useState(initialState);
-  const { name, email, password, cf_password } = userRegister;
+  const { name, email, password, cfPassword } = userRegister;
 
   const [typePass, setTypePass] = useState(false);
   const [typeCfPass, setTypeCfPass] = useState(false);
@@ -76,9 +76,9 @@ const RegisterForm = () => {
           <input 
             type={typeCfPass ? "text" : "password"}
             className="form-control" 
-            id="cf_password" 
-            name="cf_password" 
-            value={cf_password} 
+            id="cfPassword" 
+            name="cfPassword" 
+            value={cfPassword} 
             onChange={handleChangeInput}
             placeholder="비밀번호를 다시 입력하세요."
           />

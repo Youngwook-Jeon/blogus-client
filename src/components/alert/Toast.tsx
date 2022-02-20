@@ -3,7 +3,7 @@ import { ALERT } from '../../redux/types/alertTypes';
 
 interface IProps {
   title: string;
-  body: string | string[];
+  body: string | object;
   bgColor: string
 }
 
@@ -25,7 +25,9 @@ const Toast = ({ title, body, bgColor }: IProps) => {
       </div>
       <div className="toast-body">
         {
-          typeof(body) === "string" ? body : <ul>{body.map((text, index) => (<li key={index}>{text}</li>))}</ul>
+          typeof(body) === "string" ? body : (
+              <ul>{Object.values(body).map((v, index) => <li key={index}>{v}</li>)}</ul> 
+          )
         }
       </div>
     </div>

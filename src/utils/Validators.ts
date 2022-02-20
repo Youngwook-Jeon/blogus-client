@@ -1,7 +1,7 @@
 import { IUserRegister, IBlog } from './TypeScript';
 
 export const validRegister = (userRegister: IUserRegister) => {
-  const { name, email, password, cf_password } = userRegister;
+  const { name, email, password, cfPassword } = userRegister;
   const errors: string[] = [];
 
   if (!name) {
@@ -16,7 +16,7 @@ export const validRegister = (userRegister: IUserRegister) => {
     errors.push("Email or phone number format is incorrect");
   }
 
-  const msg = checkPassword(password, cf_password);
+  const msg = checkPassword(password, cfPassword);
   if (msg) errors.push(msg);
 
   return {
@@ -35,12 +35,12 @@ export function validateEmail(email: string) {
   return re.test(String(email).toLowerCase());
 }
 
-export const checkPassword = (password: string, cf_password: string) => {
+export const checkPassword = (password: string, cfPassword: string) => {
   const passwordRules = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,50}$/;
 
   if (!passwordRules.test(password)) {
     return ("적어도 하나의 영문자, 숫자, 특수문자를 포함하여 8자리 이상으로 입력하세요.");
-  } else if (password !== cf_password) {
+  } else if (password !== cfPassword) {
     return ("비밀번호가 일치하지 않습니다.");
   }
 }

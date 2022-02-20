@@ -10,7 +10,7 @@ export const login = (userLogin: IUserLogin) => async (dispatch: Dispatch<IAuthT
   try {
     dispatch({ type: ALERT, payload: { loading: true }});
 
-    const res = await postAPI('login', userLogin);
+    const res = await postAPI('auth/login', userLogin);
 
     dispatch({
       type: AUTH,
@@ -30,10 +30,10 @@ export const register = (userRegister: IUserRegister) => async (dispatch: Dispat
 
   try {
     dispatch({ type: ALERT, payload: { loading: true }});
-    const res = await postAPI(`register`, userRegister);
+    const res = await postAPI(`auth/register`, userRegister);
 
     dispatch({ type: ALERT, payload: { success: res.data.msg }});
   } catch (err: any) {
-    dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});
+    dispatch({ type: ALERT, payload: { errors: err.response.data.errors }});
   }
 }

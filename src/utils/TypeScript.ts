@@ -19,7 +19,7 @@ export interface IUserLogin {
 
 export interface IUserRegister extends IUserLogin {
   name: string;
-  cf_password: string;
+  cfPassword: string;
 }
 
 export interface IUser extends IUserLogin {

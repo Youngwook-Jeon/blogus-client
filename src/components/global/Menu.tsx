@@ -56,7 +56,7 @@ const Menu = () => {
             <img className="avatar" src={auth.user.avatar} alt="avatar" />
           </span>
           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><Link className="dropdown-item" to={`/profile/${auth.user._id}`}>프로필</Link></li>
+            <li><Link className="dropdown-item" to={`/profile/${auth.user.id}`}>프로필</Link></li>
             <li><hr className="dropdown-divider" /></li>
             {/* <li><Link className="dropdown-item" to="/" onClick={handleLogout}>Logout</Link></li> */}
             <li><Link className="dropdown-item" to="/" onClick={() => {}}>로그아웃</Link></li>

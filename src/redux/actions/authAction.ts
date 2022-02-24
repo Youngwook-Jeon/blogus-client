@@ -4,7 +4,7 @@ import { ALERT, IAlertType } from '../types/alertTypes';
 import { IUserLogin, IUserRegister } from '../../utils/TypeScript';
 import { postAPI, getAPI } from '../../utils/FetchData';
 import { validRegister, validPhone } from '../../utils/Validators';
-// import { checkTokenExp } from '../../utils/CheckTokenExp';
+import { checkTokenExp } from '../../utils/CheckTokenExp';
 
 export const login = (userLogin: IUserLogin) => async (dispatch: Dispatch<IAuthType | IAlertType>) => {
   try {
@@ -33,6 +33,18 @@ export const register = (userRegister: IUserRegister) => async (dispatch: Dispat
     const res = await postAPI(`auth/register`, userRegister);
 
     dispatch({ type: ALERT, payload: { success: res.data.msg }});
+  } catch (err: any) {
+    dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});
+  }
+}
+
+export const logout = (token: string) => async (dispatch: Dispatch<IAuthType | IAlertType>) => {
+  const result = await checkTokenExp(token, dispatch);
+  const access_token = result ? result : token;
+  try {
+    localStorage.removeItem('refresh');
+    dispatch({ type: AUTH, payload: { }});
+    await getAPI('auth/logout', access_token);
   } catch (err: any) {
     dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});
   }

@@ -2,9 +2,8 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '../../utils/TypeScript';
-// import { logout } from '../../redux/actions/authAction';
+import { logout } from '../../redux/actions/authAction';
 
-// TODO: logout
 const Menu = () => {
   const { auth } = useSelector((state: RootStore) => state);
   const { pathname } = useLocation();
@@ -26,11 +25,11 @@ const Menu = () => {
     if (pn === pathname) return 'active';
   };
 
-  // const handleLogout = () => {
-  //   if (!auth.access_token) return;
+  const handleLogout = () => {
+    if (!auth.access_token) return;
 
-  //   dispatch(logout(auth.access_token));
-  // }
+    dispatch(logout(auth.access_token));
+  }
   
   return (
     <ul className="navbar-nav ms-auto">
@@ -58,8 +57,7 @@ const Menu = () => {
           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><Link className="dropdown-item" to={`/profile/${auth.user.id}`}>프로필</Link></li>
             <li><hr className="dropdown-divider" /></li>
-            {/* <li><Link className="dropdown-item" to="/" onClick={handleLogout}>Logout</Link></li> */}
-            <li><Link className="dropdown-item" to="/" onClick={() => {}}>로그아웃</Link></li>
+            <li><Link className="dropdown-item" to="/" onClick={handleLogout}>로그아웃</Link></li>
           </ul>
         </li>
       }

@@ -44,7 +44,7 @@ const Menu = () => {
       {
         auth.user?.role === 'admin' && 
         <li className={`nav-item ${isActive("/category")}`}>
-          <Link to="/category" className="nav-link">Category</Link>
+          <Link to="/category" className="nav-link">카테고리</Link>
         </li>
       }
 

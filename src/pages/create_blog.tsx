@@ -4,10 +4,10 @@ import CardHoriz from '../components/cards/CardHoriz';
 import CreateForm from '../components/cards/CreateForm';
 import NotFound from '../components/global/NotFound';
 import { RootStore, IBlog, IUser } from '../utils/TypeScript';
-// import ReactQuill from '../components/editor/ReactQuill'
+import ReactQuill from '../components/editor/ReactQuill'
 import { validateCreateBlog, shallowEqual } from '../utils/Validators';
 import { ALERT } from '../redux/types/alertTypes';
-// import { createBlog, updateBlog } from '../redux/actions/blogAction';
+import { createBlog, updateBlog } from '../redux/actions/blogAction';
 import { getAPI } from '../utils/FetchData';
 
 interface IProps {
@@ -38,7 +38,7 @@ const CreateBlog: React.FC<IProps> = ({ id }) => {
 
   useEffect(() => {
     if (!id) return;
-    getAPI(`blog/${id}`)
+    getAPI(`blogs/${id}`)
       .then(res => {
         setBlog(res.data);
         setBody(res.data.content);
@@ -95,9 +95,9 @@ const CreateBlog: React.FC<IProps> = ({ id }) => {
         payload: { errors: '컨텐츠가 변경되지 않았습니다.' }
       });
 
-      // dispatch(updateBlog(newData, auth.access_token));
+      dispatch(updateBlog(newData, auth.access_token));
     } else {
-      // dispatch(createBlog(newData, auth.access_token));
+      dispatch(createBlog(newData, auth.access_token));
     }
   }
 
@@ -106,7 +106,7 @@ const CreateBlog: React.FC<IProps> = ({ id }) => {
     <div className="my-4 create_blog">
       <div className="row mt-4">
         <div className="col-md-6">
-          <h5>만들기</h5>
+          <h5>블로그</h5>
           <CreateForm blog={blog} setBlog={setBlog} />
         </div>
 
@@ -116,7 +116,7 @@ const CreateBlog: React.FC<IProps> = ({ id }) => {
         </div>
       </div>
 
-      {/* <ReactQuill setBody={setBody} body={body} /> */}
+      <ReactQuill setBody={setBody} body={body} />
 
       <div ref={divRef} dangerouslySetInnerHTML={{
         __html: body

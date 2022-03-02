@@ -27,7 +27,7 @@ const CreateForm: React.FC<IProps> = ({ blog, setBlog }) => {
   return (
     <form>
       <div className="form-group position-relative">
-        <input type="text" className="form-control" value={blog.title} name="title" onChange={handleChangeInput} />
+        <input type="text" className="form-control" value={blog.title} name="title" onChange={handleChangeInput} placeholder="블로그 제목" />
         <small className="text-muted position-absolute" style={{ bottom: 0, right: '3px', opacity: '0.4' }}>
           {blog.title.length}/50
         </small>
@@ -38,7 +38,7 @@ const CreateForm: React.FC<IProps> = ({ blog, setBlog }) => {
       </div>
 
       <div className="form-group position-relative">
-        <textarea className="form-control" rows={4} value={blog.description} style={{ resize: 'none' }} name="description" onChange={handleChangeInput} />
+        <textarea className="form-control" rows={4} value={blog.description} style={{ resize: 'none' }} name="description" onChange={handleChangeInput} placeholder="블로그에 대한 설명" />
         <small className="text-muted position-absolute" style={{ bottom: 0, right: '3px', opacity: '0.4' }}>
           {blog.description.length}/200
         </small>

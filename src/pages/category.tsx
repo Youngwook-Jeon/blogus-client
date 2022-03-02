@@ -37,7 +37,7 @@ const Category = () => {
     }
   }
 
-  if (auth.user?.role !== 'admin') return <NotFound />
+  if (auth.user?.role !== 'ROLE_ADMIN') return <NotFound />
   return (
     <div className="category">
       <form onSubmit={handleSubmit}>

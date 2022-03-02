@@ -14,7 +14,7 @@ export const createCategory = (name: string, token: string) => async (dispatch: 
     const res = await postAPI('categories', { name }, access_token);
     dispatch({
       type: CREATE_CATEGORY,
-      payload: res.data.newCategory
+      payload: res.data
     });
     dispatch({ type: ALERT, payload: { loading: false }});
   } catch (err: any) {
@@ -30,7 +30,7 @@ export const getCategories = () => async (dispatch: Dispatch<IAlertType | Catego
     
     dispatch({
       type: GET_CATEGORIES,
-      payload: res.data.categories
+      payload: res.data
     });
 
     dispatch({ type: ALERT, payload: { loading: false }});
@@ -65,6 +65,7 @@ export const deleteCategory = (id: string, token: string) => async (dispatch: Di
     await deleteAPI(`categories/${id}`, access_token);
     
   } catch (err: any) {
+    console.log(err.response);
     dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});
   }
 }

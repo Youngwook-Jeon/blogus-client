@@ -13,7 +13,7 @@ export const validRegister = (userRegister: IUserRegister) => {
   if (!email) {
     errors.push("이메일을 입력하세요.");
   } else if (!validateEmail(email)) {
-    errors.push("Email or phone number format is incorrect");
+    errors.push("이메일 형식이 올바르지 않습니다.");
   }
 
   const msg = checkPassword(password, cfPassword);
@@ -48,27 +48,27 @@ export const checkPassword = (password: string, cfPassword: string) => {
 export const validateCreateBlog = ({ title, content, description, thumbnail, category }: IBlog) => {
   const err: string[] = [];
   if (title.trim().length < 10) {
-    err.push("Title has at least 10 characters.");
+    err.push("제목의 길이는 10자 이상, 50자 이하여야 합니다.");
   } else if (title.trim().length > 50) {
-    err.push("Title is up to 50 characters long.");
+    err.push("제목의 길이는 10자 이상, 50자 이하여야 합니다.");
   }
 
   if (content.trim().length < 2000) {
-    err.push("Content has at least 2000 characters.");
+    err.push("내용은 2000자 이상이어야 합니다.");
   } 
 
   if (description.trim().length < 50) {
-    err.push("Description has at least 50 characters.");
+    err.push("설명은 50자 이상, 200자 이하여야 합니다.");
   } else if (description.trim().length > 200) {
-    err.push("Description is up to 50 characters long.");
+    err.push("설명은 50자 이상, 200자 이하여야 합니다.");
   }
 
   if (!thumbnail) {
-    err.push("Thumbnail cannot be left blank.");
+    err.push("썸네일이 필요합니다.");
   }
 
   if (!category) {
-    err.push("Category cannot be left blank.");
+    err.push("카테고리를 선택하세요.");
   }
 
   return {

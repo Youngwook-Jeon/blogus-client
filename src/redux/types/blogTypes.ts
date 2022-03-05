@@ -7,7 +7,7 @@ export const CREATE_BLOGS_USER_ID = "CREATE_BLOGS_USER_ID";
 export const DELETE_BLOGS_USER_ID = "DELETE_BLOGS_USER_ID";
 
 export interface IHomeBlogs {
-  _id: string;
+  id: string;
   name: string;
   count: number;
   blogs: IBlog[]

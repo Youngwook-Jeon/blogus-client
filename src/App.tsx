@@ -7,13 +7,14 @@ import Header from './components/global/Header';
 import PageRender from './PageRender';
 import { refreshToken } from './redux/actions/authAction';
 import { getCategories } from './redux/actions/categoryAction';
+import { getHomeBlogs } from './redux/actions/blogAction';
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCategories());
-    // dispatch(getHomeBlogs());
+    dispatch(getHomeBlogs());
     dispatch(refreshToken());
   }, [dispatch]);
   

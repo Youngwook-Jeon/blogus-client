@@ -54,11 +54,11 @@ export const getHomeBlogs = () => async (dispatch: Dispatch<IAlertType | IGetHom
 
 export const getBlogsByCategoryId = (id: string, search: string) => async (dispatch: Dispatch<IAlertType | IGetBlogsCategoryType>) => {
   try {
-    let limit = 4;
+    let size = 4;
     let value = search ? search : `?page=${1}`;
     dispatch({ type: ALERT, payload: { loading: true }});
 
-    const res = await getAPI(`blogs/category/${id}${value}&limit=${limit}`);
+    const res = await getAPI(`blogs/category/${id}${value}&size=${size}`);
     
     dispatch({
       type: GET_BLOGS_CATEGORY_ID,
@@ -73,11 +73,11 @@ export const getBlogsByCategoryId = (id: string, search: string) => async (dispa
 
 export const getBlogsByUserId = (id: string, search: string) => async (dispatch: Dispatch<IAlertType | IGetBlogsUserType>) => {
   try {
-    let limit = 3;
+    let size = 3;
     let value = search ? search : `?page=${1}`;
     dispatch({ type: ALERT, payload: { loading: true }});
 
-    const res = await getAPI(`blogs/user/${id}${value}&limit=${limit}`);
+    const res = await getAPI(`blogs/user/${id}${value}&size=${size}`);
 
     dispatch({
       type: GET_BLOGS_USER_ID,

@@ -3,7 +3,7 @@ import auth from './authReducer';
 import alert from './alertReducer';
 import category from './categoryReducer';
 import homeBlogs from './homeBlogsReducer';
-// import blogsCategory from './blogsCategoryReducer';
+import blogsCategory from './blogsCategoryReducer';
 // import otherInfo from './otherInfoReducer';
 import blogsUser from './blogsUserReducer';
 // import comments from './commentReducer';
@@ -14,7 +14,7 @@ export default combineReducers({
   alert,
   category,
   homeBlogs,
-  // blogsCategory,
+  blogsCategory,
   // otherInfo,
   blogsUser,
   // comments,

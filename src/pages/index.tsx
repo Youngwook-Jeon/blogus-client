@@ -28,7 +28,9 @@ const Home = () => {
 
                 <div className="home_blogs">
                   {
-                    homeBlog.blogs.map(blog => (
+                    homeBlog.count >= 4 ? homeBlog.blogs.slice(0, 4).map(blog => (
+                      <CardVert key={blog.id} blog={blog} />
+                    )) : homeBlog.blogs.map(blog => (
                       <CardVert key={blog.id} blog={blog} />
                     ))
                   }

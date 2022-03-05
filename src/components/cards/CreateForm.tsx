@@ -49,7 +49,7 @@ const CreateForm: React.FC<IProps> = ({ blog, setBlog }) => {
           <option value="">카테고리를 선택하세요</option>
           {
             category.map(c => (
-              <option key={c.id} value={c.id}>{c.name}</option>
+              <option key={c.id} value={c.name}>{c.name}</option>
             ))
           }
         </select>

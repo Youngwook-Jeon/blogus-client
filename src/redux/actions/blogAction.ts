@@ -29,7 +29,7 @@ export const createBlog = (blog: IBlog, token: string) => async (dispatch: Dispa
       payload: res.data
     })
 
-    dispatch({ type: ALERT, payload: { loading: false }});
+    dispatch({ type: ALERT, payload: { success: "블로그 작성에 성공했습니다." }});
   } catch (err: any) {
     dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});
   }

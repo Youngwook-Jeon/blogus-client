@@ -73,7 +73,7 @@ export const getBlogsByCategoryId = (id: string, search: string) => async (dispa
 
 export const getBlogsByUserId = (id: string, search: string) => async (dispatch: Dispatch<IAlertType | IGetBlogsUserType>) => {
   try {
-    let size = 3;
+    let size = 4;
     let value = search ? search : `?page=${1}`;
     dispatch({ type: ALERT, payload: { loading: true }});
 

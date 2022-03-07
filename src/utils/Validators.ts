@@ -47,20 +47,20 @@ export const checkPassword = (password: string, cfPassword: string) => {
 
 export const validateCreateBlog = ({ title, content, description, thumbnail, category }: IBlog) => {
   const err: string[] = [];
-  if (title.trim().length < 10) {
-    err.push("제목의 길이는 10자 이상, 50자 이하여야 합니다.");
+  if (title.trim().length < 2) {
+    err.push("제목의 길이는 2자 이상, 50자 이하여야 합니다.");
   } else if (title.trim().length > 50) {
-    err.push("제목의 길이는 10자 이상, 50자 이하여야 합니다.");
+    err.push("제목의 길이는 2자 이상, 50자 이하여야 합니다.");
   }
 
-  if (content.trim().length < 2000) {
-    err.push("내용은 2000자 이상이어야 합니다.");
+  if (content.trim().length < 100) {
+    err.push("내용은 100자 이상이어야 합니다.");
   } 
 
-  if (description.trim().length < 50) {
-    err.push("설명은 50자 이상, 200자 이하여야 합니다.");
+  if (description.trim().length < 10) {
+    err.push("설명은 10자 이상, 200자 이하여야 합니다.");
   } else if (description.trim().length > 200) {
-    err.push("설명은 50자 이상, 200자 이하여야 합니다.");
+    err.push("설명은 10자 이상, 200자 이하여야 합니다.");
   }
 
   if (!thumbnail) {

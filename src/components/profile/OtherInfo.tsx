@@ -16,10 +16,10 @@ const OtherInfo: React.FC<IProps> = ({ id }) => {
   useEffect(() => {
     if (!id) return;
 
-    if (otherInfo.every(user => user.id !== id)) {
+    if (otherInfo.every(user => user.id != id)) {
       dispatch(getOtherInfo(id));
     } else {
-      const newUser = otherInfo.find(user => user.id === id);
+      const newUser = otherInfo.find(user => user.id == id);
       if (newUser) setOther(newUser);
     }
 

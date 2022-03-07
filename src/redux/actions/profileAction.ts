@@ -58,7 +58,7 @@ export const resetPassword = (password: string, cfPassword: string, token: strin
   try {
     dispatch({ type: ALERT, payload: { loading: true }});  
 
-    const res = await patchAPI('reset_password', { password }, access_token);
+    const res = await patchAPI('users/reset_password', { password }, access_token);
     dispatch({ type: ALERT, payload: { success: res.data.msg }});  
   } catch (err: any) {
     dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});

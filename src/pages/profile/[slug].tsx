@@ -14,7 +14,7 @@ const Profile = () => {
     <div className="row my-3">
       <div className="col-md-5 mb-3">
         {
-          auth.user?.id === slug ? <UserInfo /> : <OtherInfo id={slug} />
+          auth.user?.id == slug ? <UserInfo /> : <OtherInfo id={slug} />
         }
       </div>
 

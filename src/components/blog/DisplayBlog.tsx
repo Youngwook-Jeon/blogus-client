@@ -2,64 +2,59 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { IBlog, RootStore, IUser, IComment } from '../../utils/TypeScript';
-// import Input from '../comments/Input';
-// import Comments from '../comments/Comments';
-// import { createComment, getComments } from '../../redux/actions/commentAction';
+import Input from '../comments/Input';
+import Comments from '../comments/Comments';
+import { createComment, getComments } from '../../redux/actions/commentAction';
 import Loading from '../global/Loading';
-import Pagination from '../global/Pagination';
 
 interface IProps {
   blog: IBlog;
 }
 
 const DisplayBlog: React.FC<IProps> = ({ blog }) => {
-  // const { auth, comments } = useSelector((state: RootStore) => state);
-  const { auth } = useSelector((state: RootStore) => state);
+  const { auth, comments } = useSelector((state: RootStore) => state);
+  // const { auth } = useSelector((state: RootStore) => state);
   const dispatch = useDispatch();
 
-  // const [showComments, setShowComments] = useState<IComment[]>([]);
+  const [allComments, setAllComments] = useState<IComment[]>([]);
   const [loading, setLoading] = useState(false);
+  const rootComments = allComments.filter((comment) => comment.parentId == null);
 
-  const history = useHistory();
+  const getReplies = (commentId: string) => {
+    return allComments.filter((c) => c.parentId === commentId);
+  }
 
-  // const handleComment = (body: string) => {
-  //   if (!auth.user || !auth.access_token) return;
+  const handleComment = (body: string, parentId?: string) => {
+    if (!auth.user || !auth.access_token) return;
 
-  //   const data = {
-  //     content: body,
-  //     user: auth.user,
-  //     blog_id: (blog.id as string),
-  //     blog_user_id: (blog.user as IUser).id,
-  //     replyCM: [],
-  //     createdAt: new Date().toISOString()
-  //   }
+    const data = {
+      content: body,
+      user: auth.user,
+      parentId: parentId,
+      blogUserId: (blog.user as IUser).id,
+      blogId: (blog.id as string),
+      createdAt: new Date().toISOString()
+    }
     
-  //   setShowComments([data, ...showComments]);
-  //   dispatch(createComment(data, auth.access_token));
-  // };
+    setAllComments([data, ...allComments]);
+    dispatch(createComment(data, auth.access_token));
+  };
 
-  // useEffect(() => {
-  //   setShowComments(comments.data);
-  // }, [comments.data]);
+  useEffect(() => {
+    setAllComments(comments.data);
+    console.log(comments.data);
+  }, [comments.data]);
 
-  // const fetchComments = useCallback(async (id: string, num = 1) => {
-  //   setLoading(true);
-  //   await dispatch(getComments(id, num));
-  //   setLoading(false);
-  // }, [dispatch]);
+  const fetchComments = useCallback(async (id: string) => {
+    setLoading(true);
+    // await dispatch(getComments(id));
+    setLoading(false);
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   if (!blog.id) return;
-
-  //   const num = history.location.search.slice(6) || 1;
-  //   fetchComments(blog.id, num);
-  // }, [blog.id, fetchComments, history]);
-
-  // const handlePagination = (num: number) => {
-  //   if (!blog.id) return;
-
-  //   fetchComments(blog.id, num);
-  // };
+  useEffect(() => {
+    if (!blog.id) return;
+    fetchComments(blog.id);
+  }, [blog.id, fetchComments]);
 
   return (
     <div>
@@ -85,7 +80,7 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
       }} />
 
       <hr className="my-1" />
-      {/* <h3 style={{ color: "#ff7a00" }}>댓글</h3>
+      <h3 style={{ color: "#ff7a00" }}>댓글</h3>
       {
         auth.user 
         ? <Input callback={handleComment} />
@@ -97,16 +92,15 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
       {
         loading
         ? <Loading />
-        : showComments?.map((comment, index) => (
-          <Comments key={index} comment={comment} />
-        ))
+        : rootComments.map((rootComment) => (
+            <Comments 
+              key={rootComment.id} 
+              comment={rootComment} 
+              replies={getReplies((rootComment.id as string))} 
+              handleComment={handleComment}
+            />
+          ))
       }
-
-      {
-        comments.total > 1 &&
-        <Pagination total={comments.total} callback={handlePagination} />
-      } */}
-
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { IComment, IUser, RootStore } from '../../utils/TypeScript';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { IComment, RootStore } from '../../utils/TypeScript';
 import AvatarComment from './AvatarComment';
 import Input from './Input';
 
@@ -14,9 +14,10 @@ interface IProps {
 const Comments: React.FC<IProps> = ({ comment, replies, parentId = null, handleComment }) => {
   const [onReply, setOnReply] = useState(false);
   const { auth } = useSelector((state: RootStore) => state);
-  const dispatch = useDispatch();
 
   const [edit, setEdit] = useState<IComment>();
+
+  const replyId = parentId ? parentId : comment.id;
 
   const Nav = (comment: IComment) => {
     return (
@@ -28,7 +29,7 @@ const Comments: React.FC<IProps> = ({ comment, replies, parentId = null, handleC
   };
 
   return (
-    <div className="my-3 d-flex" 
+    <div className="mt-2 d-flex" 
       style={{ opacity: comment.id ? 1 : 0.5, pointerEvents: comment.id ? 'initial' : 'none' }}
     >
       <AvatarComment user={comment.user} />
@@ -36,7 +37,7 @@ const Comments: React.FC<IProps> = ({ comment, replies, parentId = null, handleC
       <div className="w-100">
         {
           edit
-          ? <Input callback={() => (console.log("TODO: handleUpdate"))} edit={edit} setEdit={setEdit} />
+          ? <Input callback={() => (console.log("TODO: handleUpdate"))} edit={edit} setEdit={setEdit} parentId={replyId} />
           : (
             <div className="comment_box">
               <div className="p-2" dangerouslySetInnerHTML={{
@@ -65,21 +66,21 @@ const Comments: React.FC<IProps> = ({ comment, replies, parentId = null, handleC
           )
         }
         {
-          onReply && <Input callback={handleComment} />
+          onReply && <Input callback={handleComment} parentId={replyId} />
+        }
+
+        {
+          replies.length > 0 && (
+            <div className="mt-2 w-100" 
+              style={{ opacity: comment.id ? 1 : 0.5, pointerEvents: comment.id ? 'initial' : 'none' }}
+            >
+              {replies.map((reply) => (
+                <Comments key={reply.id} comment={reply} replies={[]} parentId={comment.id} handleComment={handleComment}  />
+              ))}
+            </div>
+          )
         }
       </div>
-
-      {
-        replies.length > 0 && (
-          <div className="my-3 d-flex" 
-            style={{ opacity: comment.id ? 1 : 0.5, pointerEvents: comment.id ? 'initial' : 'none' }}
-          >
-            {replies.map((reply) => (
-              <Comments key={reply.id} comment={reply} replies={[]} parentId={comment.id} handleComment={handleComment}  />
-            ))}
-          </div>
-        )
-      }
     </div>
   );
 };

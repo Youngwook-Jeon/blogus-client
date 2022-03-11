@@ -10,11 +10,10 @@ export const createComment = (data: IComment, token: string) =>
     const result = await checkTokenExp(token, dispatch);
     const access_token = result ? result : token;
     try {
-      // const res = await postAPI('comment', data, access_token);
+      const res = await postAPI('comments', data, access_token);
       dispatch({
         type: CREATE_COMMENT,
-        // payload: { ...res.data, user: data.user }
-        payload: { ...data, user: data.user}
+        payload: { ...res.data, user: data.user }
       });
     } catch (err: any) {
       dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});
@@ -29,8 +28,8 @@ export const getComments = (id: string) =>
       dispatch({
         type: GET_COMMENTS,
         payload: {
-          data: res.data.comments,
-          total: res.data.total
+          data: res.data,
+          total: res.data.length
         }
       });
 

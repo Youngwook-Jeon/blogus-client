@@ -13,7 +13,8 @@ const commentReducer = (
     case CREATE_COMMENT:
       return {
         ...state,
-        data: [action.payload, ...state.data]
+        data: [...state.data, action.payload],
+        total: state.total + 1
       };
 
     case GET_COMMENTS:

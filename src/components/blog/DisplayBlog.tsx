@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IBlog, RootStore, IUser, IComment } from '../../utils/TypeScript';
 import Input from '../comments/Input';
 import Comments from '../comments/Comments';
@@ -36,18 +36,17 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
       createdAt: new Date().toISOString()
     }
     
-    setAllComments([data, ...allComments]);
+    setAllComments([...allComments, data]);
     dispatch(createComment(data, auth.access_token));
   };
 
   useEffect(() => {
     setAllComments(comments.data);
-    console.log(comments.data);
   }, [comments.data]);
 
   const fetchComments = useCallback(async (id: string) => {
     setLoading(true);
-    // await dispatch(getComments(id));
+    await dispatch(getComments(id));
     setLoading(false);
   }, [dispatch]);
 

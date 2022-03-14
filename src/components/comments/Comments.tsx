@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { IComment, RootStore } from '../../utils/TypeScript';
+import { updateComment } from '../../redux/actions/commentAction';
 import AvatarComment from './AvatarComment';
 import Input from './Input';
 
@@ -14,10 +15,21 @@ interface IProps {
 const Comments: React.FC<IProps> = ({ comment, replies, parentId = null, handleComment }) => {
   const [onReply, setOnReply] = useState(false);
   const { auth } = useSelector((state: RootStore) => state);
+  const dispatch = useDispatch();
 
   const [edit, setEdit] = useState<IComment>();
 
   const replyId = parentId ? parentId : comment.id;
+
+  const handleUpdate = (body: string, parentId?: string) => {
+    if (!auth.user || !auth.access_token || !edit) return;
+
+    if (body === edit.content) return setEdit(undefined);
+
+    const newComment = { ...edit, content: body, parentId: parentId };
+    dispatch(updateComment(newComment, auth.access_token));
+    setEdit(undefined);
+  }
 
   const Nav = (comment: IComment) => {
     return (
@@ -37,7 +49,7 @@ const Comments: React.FC<IProps> = ({ comment, replies, parentId = null, handleC
       <div className="w-100">
         {
           edit
-          ? <Input callback={() => (console.log("TODO: handleUpdate"))} edit={edit} setEdit={setEdit} parentId={replyId} />
+          ? <Input callback={handleUpdate} edit={edit} setEdit={setEdit} parentId={replyId} />
           : (
             <div className="comment_box">
               <div className="p-2" dangerouslySetInnerHTML={{

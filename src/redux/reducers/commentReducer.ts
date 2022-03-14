@@ -34,13 +34,13 @@ const commentReducer = (
     //     ))
     //   }
 
-    // case UPDATE_COMMENT:
-    //   return {
-    //     ...state,
-    //     data: state.data.map(item => (
-    //       item.id === action.payload.id ? action.payload : item
-    //     ))
-    //   }
+    case UPDATE_COMMENT:
+      return {
+        ...state,
+        data: state.data.map(item => (
+          item.id === action.payload.id ? action.payload : item
+        ))
+      }
 
     // case UPDATE_REPLY:
     //   return {

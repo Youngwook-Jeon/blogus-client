@@ -60,12 +60,12 @@ export const updateComment = (data: IComment, token: string) =>
     const result = await checkTokenExp(token, dispatch);
     const access_token = result ? result : token;
     try {
-      // dispatch({
-      //   type: data.comment_root ? UPDATE_REPLY : UPDATE_COMMENT,
-      //   payload: data
-      // });
+      const res = await patchAPI(`comments/${data.id}`, data, access_token);
 
-      await patchAPI(`comment/${data.id}`, { data }, access_token);
+      dispatch({
+        type: UPDATE_COMMENT,
+        payload: res.data
+      });
 
     } catch (err: any) {
       dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});

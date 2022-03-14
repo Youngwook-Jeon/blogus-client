@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { IComment, RootStore } from '../../utils/TypeScript';
-import { updateComment } from '../../redux/actions/commentAction';
+import { updateComment, deleteComment } from '../../redux/actions/commentAction';
 import AvatarComment from './AvatarComment';
 import Input from './Input';
 
@@ -31,10 +31,20 @@ const Comments: React.FC<IProps> = ({ comment, replies, parentId = null, handleC
     setEdit(undefined);
   }
 
+  const handleDelete = (comment: IComment) => {
+    if (!auth.user || !auth.access_token) return;
+
+    if (comment.isDeleted) return;
+
+    if (window.confirm("이 댓글을 삭제하시겠습니까?")) {
+      dispatch(deleteComment(comment, auth.access_token));
+    }
+  }
+
   const Nav = (comment: IComment) => {
     return (
       <div>
-        <i className="fas fa-trash-alt mx-2" onClick={() => console.log("TODO: handleDelete")} />
+        <i className="fas fa-trash-alt mx-2" onClick={() => handleDelete(comment)} />
         <i className="fas fa-edit me-2" onClick={() => setEdit(comment)} />
       </div>
     )
@@ -65,7 +75,7 @@ const Comments: React.FC<IProps> = ({ comment, replies, parentId = null, handleC
                   <div className="comment_nav">
                     {
                       comment.blogUserId === auth.user?.id ?
-                        (comment.user.id === auth.user.id ? Nav(comment) : <i className="fas fa-trash-alt mx-2" onClick={() => console.log("TODO: handleDelete")} />)
+                        (comment.user.id === auth.user.id ? Nav(comment) : <i className="fas fa-trash-alt mx-2" onClick={() => handleDelete(comment)} />)
                         : comment.user.id === auth.user?.id && Nav(comment)
                     }
                   </div>
@@ -86,8 +96,8 @@ const Comments: React.FC<IProps> = ({ comment, replies, parentId = null, handleC
             <div className="mt-2 w-100" 
               style={{ opacity: comment.id ? 1 : 0.5, pointerEvents: comment.id ? 'initial' : 'none' }}
             >
-              {replies.map((reply) => (
-                <Comments key={reply.id} comment={reply} replies={[]} parentId={comment.id} handleComment={handleComment}  />
+              {replies.map((reply, index) => (
+                <Comments key={index} comment={reply} replies={[]} parentId={comment.id} handleComment={handleComment}  />
               ))}
             </div>
           )

@@ -56,11 +56,13 @@ const commentReducer = (
     //     ))
     //   }
 
-    // case DELETE_COMMENT:
-    //   return {
-    //     ...state,
-    //     data: state.data.filter(item => item.id !== action.payload.id)
-    //   }
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        data: state.data.map(item => (
+          item.id === action.payload.id ? action.payload : item
+        ))
+      }
 
     // case DELETE_REPLY:
     //   return {

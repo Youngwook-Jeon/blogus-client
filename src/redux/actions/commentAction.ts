@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { ALERT, IAlertType } from '../types/alertTypes';
 import { IComment } from '../../utils/TypeScript';
 import { getAPI, postAPI, patchAPI, deleteAPI } from '../../utils/FetchData';
-import { GET_COMMENTS, ICreateCommentType, IDeleteType, IGetCommentsType, IReplyCommentType, IUpdateType, REPLY_COMMENT, UPDATE_COMMENT, UPDATE_REPLY, CREATE_COMMENT } from '../types/commentTypes';
+import { GET_COMMENTS, ICreateCommentType, IDeleteType, IGetCommentsType, IReplyCommentType, IUpdateType, UPDATE_COMMENT, CREATE_COMMENT, DELETE_COMMENT } from '../types/commentTypes';
 import { checkTokenExp } from '../../utils/CheckTokenExp';
 
 export const createComment = (data: IComment, token: string) => 
@@ -67,6 +67,8 @@ export const updateComment = (data: IComment, token: string) =>
         payload: res.data
       });
 
+      dispatch({ type: ALERT, payload: { success: "댓글이 수정되었습니다." }});
+
     } catch (err: any) {
       dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});
     }
@@ -77,13 +79,14 @@ export const deleteComment = (data: IComment, token: string) =>
     const result = await checkTokenExp(token, dispatch);
     const access_token = result ? result : token;
     try {
-      // dispatch({
-      //   type: data.comment_root ? DELETE_REPLY : DELETE_COMMENT,
-      //   payload: data
-      // });
+      const res = await deleteAPI(`comments/${data.id}`, access_token);
 
-      await deleteAPI(`comment/${data.id}`, access_token);
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: res.data
+      });
 
+      dispatch({ type: ALERT, payload: { success: "댓글을 삭제했습니다." }});
     } catch (err: any) {
       dispatch({ type: ALERT, payload: { errors: err.response.data.msg }});
     }
